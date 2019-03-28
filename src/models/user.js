@@ -36,12 +36,12 @@ export default {
       //   payload: { code }
       // })
 
-      history.listen( ({pathname}) => {
-        const code = getQueryString('code');
-        if( pathname === '/' ) {
-          dispatch({type: 'login', payload: { code }})
-        }
-      })
+      // history.listen( ({pathname}) => {
+      //   const code = getQueryString('code');
+      //   if( pathname === '/' ) {
+      //     dispatch({type: 'login', payload: { code }})
+      //   }
+      // })
     }
   },
 

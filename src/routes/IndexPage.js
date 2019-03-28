@@ -4,9 +4,13 @@ import { Row, Col, Steps, Button, Upload, Icon} from 'antd';
 import styles from './IndexPage.less';
 import { file_host, UploadURL } from '../constants';
 import { getLocalStorage, formatFile } from '../utils/utils';
+import { WxAppID } from "../constants";
 import QRCode from 'qrcode.react';
-import { compose } from 'redux';
 
+
+const redirect = 'http://192.168.1.104:8000';
+const state = '';
+const scope = 'snsapi_login';
 
 const Step = Steps.Step;
 const steps = [{
@@ -51,8 +55,6 @@ class IndexPage extends Component {
     const { current, fileUrl, user_id } = this.state;
     let { list, loading, url, info, currentOrder, onConfirm, onUpload } = this.props;
     list = list.map(item => ({...item, name: formatFile(item.files.content).name, type: formatFile(item.files.content).type}));
-
-    console.log(['/upload', '/selectParams', '/order'].indexOf(url))
 
     const uploadButton = (
       <div className={styles.btnWrap}>
@@ -150,8 +152,17 @@ class IndexPage extends Component {
                     </div>
                   </div>:null
                 }
-                  {/* <div className={styles.loginCode}></div>
-                  <div className={styles.title}>扫描微信二维码登录</div> */}
+                {url === '/login'&&!user_id?
+                  <div className={styles.loginCode} id="login_code" >
+                    <iframe className={styles.loginIframe}
+                      frameBorder="0"
+                      sandbox="allow-scripts allow-same-origin allow-top-navigation"
+                      scrolling="no"
+                      src={`https://open.weixin.qq.com/connect/qrconnect?appid=${WxAppID}&redirect_uri=${redirect}&response_type=code&scope=${scope}&state=${state}#wechat_redirect`}>
+                    </iframe>
+                  </div>: null
+                }
+                  
                   {/* <Upload
                     name="file"
                     // listType="picture-card"
